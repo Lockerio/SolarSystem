@@ -13,53 +13,23 @@ namespace OpenTKTut.Shapes
 {
     class Sphere : OGLShape
     {
-        public bool IsLinearMotion { get; set; }
-        public Vector3? LinearMotionDirection { get; set; }
-        public float LinearMotionSpeed { get; set; }
-
-        public Sphere(
-            Vector3 center,
-            bool isStar,
-            double radius,
-            bool autoRotate,
-            bool orbiting,
-            bool moon,
-            float rotatingSpeed,
-            float rotatingRadius,
-            float orbitingSpeed,
-            float moonorbit,
-            float moonSpeed,
-            int textype,
-            bool isLinearMotion = false,
-            Vector3? linearMotionDirection = null,
-            float linearMotionSpeed = 0)
+        public Sphere(Vector3 center, bool isStar, double radius, bool AutoRotate,bool orbiting ,bool moon ,float rotatingSpeed, float RotatingRadius , float orbitingSpeed, float moonorbit , float moonSpeed, int textype)
         {
             _Center = center;
             Radius = radius;
-            MeshPolygons = MeshElement.Sphere(Radius);
-            EnableAutoRotate = autoRotate;
+            MeshPolygons = MeshElement.Sphere(Radius); 
+            EnableAutoRotate = AutoRotate;
             Orbiting = orbiting;
             Moon = moon;
             RotatingSpeed = rotatingSpeed;
-            Rotatingradius = rotatingRadius;
+            Rotatingradius = RotatingRadius;
             OrbitingSpeed = orbitingSpeed;
             MoonOrbit = moonorbit;
             MoonSpeed = moonSpeed;
             Textype = textype;
             IsStar = isStar;
-            IsLinearMotion = isLinearMotion;
-            LinearMotionDirection = linearMotionDirection;
-            LinearMotionSpeed = linearMotionSpeed;
         }
-
-        public void MoveLinearMotion(float deltaTime)
-        {
-            if (IsLinearMotion && LinearMotionDirection != null)
-            {
-                _Center += LinearMotionDirection.Value * LinearMotionSpeed * deltaTime;
-            }
-        }
-
+        
         public bool IsStar { get; set; } = false;
         public Vector3 EmissionColor { get; set; }
         public double Radius { get; set; }
@@ -72,24 +42,28 @@ namespace OpenTKTut.Shapes
 
             if (IsStar)
             {
+                // Включение света для звезды
                 GL.Enable(EnableCap.Lighting);
                 GL.Enable(EnableCap.Light0);
 
-                float[] lightPosition = { 1f, 1f, 1f, 1f };
+                float[] lightPosition = { 1f, 1f, 1f, 1f }; // Теперь свет типа точечного
                 float[] lightColor = { 1.0f, 0.2f, 0.2f, 1.0f };
 
                 GL.Light(LightName.Light0, LightParameter.Position, lightPosition);
                 GL.Light(LightName.Light0, LightParameter.Diffuse, lightColor);
                 GL.Light(LightName.Light0, LightParameter.Specular, lightColor);
 
+                // Установка интенсивности света
                 float[] lightAmbient = { 1.0f, 0.2f, 0.2f, 1.0f };
                 GL.Light(LightName.Light0, LightParameter.Ambient, lightAmbient);
 
+                // Звезда имеет эмиссию
                 float[] emission = { 1.0f, 1.0f, 1.0f, 1.0f };
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Emission, emission);
             }
             else
             {
+                // Включение освещения и установка параметров материала (пример)
                 GL.Enable(EnableCap.Lighting);
                 GL.Enable(EnableCap.Light0);
 
@@ -102,10 +76,12 @@ namespace OpenTKTut.Shapes
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Specular, specular);
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Shininess, 1f);
 
+                // Отключение эмиссии для других объектов
                 float[] noEmission = { 0.1f, 0.1f, 0.1f, 1.0f };
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Emission, noEmission);
             }
 
+            // Установка глобальной интенсивности света
             float[] lightModelAmbient = { 1f, 1, 1f, 0.5f };
             GL.LightModel(LightModelParameter.LightModelAmbient, lightModelAmbient);
 
@@ -117,7 +93,7 @@ namespace OpenTKTut.Shapes
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    Vector3 normal = MeshPolygons[i].Vertices[j].Normalized();
+                    Vector3 normal = MeshPolygons[i].Vertices[j].Normalized(); // Нормализация нормали
                     GL.Normal3(normal);
                     GL.TexCoord2(MeshPolygons[i].Texcoord[j]);
                     GL.Vertex3(MeshPolygons[i].Vertices[j]);

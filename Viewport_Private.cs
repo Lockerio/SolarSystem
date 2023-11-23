@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -8,28 +9,37 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 
 namespace OpenTKTut
 {
+
+
+   
+    
     partial class Viewport : Program
     {
-        Shapes.Sphere Sun = new Shapes.Sphere(new Vector3(0f, 0f, 43.0f), true, 5, true, true, true, 1, 0, 1, 1,  0, 1, false, null, 0);
-        Shapes.Sphere mercury = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), true, .488, true, false, true, 1, 6, 1.5f, 0, 0, 2, false, null, 0);          
-        Shapes.Sphere venus = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1, true, false, true, 2, 11, 1.3f, 0, 0, 3, false, null, 0); 
-        Shapes.Sphere earth = new Shapes.Sphere(new Vector3( 0.0f,0.0f,43.0f), false, 1.3, true, false, true, 3, 15, 1.1f, 0, 0, 4, false, null, 0);
-        Shapes.Sphere moon_earth = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.7, true, false, true, 1, 15, 1.1f, 1.5f, 2f, 5, false, null, 0);     
-        Shapes.Sphere mars = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.88, true, false, true, 1, 23, .9f, 0, 0, 6, false, null, 0); 
-        Shapes.Sphere mars_moon = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.4f, true, false, true, 1, 23, .9f, 1f, 2f, 5, false, null, 0);    
-        Shapes.Sphere jupiter = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2.5, true, false, true, 1, 30, .6f, 0, 0, 7, false, null, 0);       
-        Shapes.Sphere saturn = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2, true, false, true, 1, 35, .5f, 0, 0, 8, false, null, 0); 
-        Shapes.Sphere uranus = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1.5, true, false, true, 1, 40, .3f, 0, 0, 9, false, null, 0); 
-        Shapes.Sphere neptune = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1.3, true, false, true, 1, 45, .2f, 0, 0, 10, false, null, 0); 
-        Shapes.Sphere Comet = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2, true, false, true, 1, 50, .4f, 0, 0, 12, false, null, 0);
+        
+            Shapes.Sphere Sun = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), true, 5, true,false,false, 1, 0, 0, 0,  0, 1); 
+
+            Shapes.Sphere mercury = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, .488, true,true,false, 1, 6, 1.5f, 0, 0, 2);          
+            Shapes.Sphere venus = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1, true, true, false, 2, 11, 1.3f, 0, 0, 3); 
+            Shapes.Sphere earth = new Shapes.Sphere(new Vector3( 0.0f,0.0f,43.0f), false, 1.3, true, true, false, 3, 15, 1.1f, 0, 0, 4);
+            Shapes.Sphere moon_earth = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.7, true, true, true, 1, 15, 1.1f, 1.5f, 2f, 5);     
+            Shapes.Sphere mars = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.88, true, true, false, 1, 23, .9f, 0, 0, 6); 
+            Shapes.Sphere mars_moon = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 0.4f, true, true, true, 1, 23, .9f, 1f, 2f, 5);    
+            Shapes.Sphere jupiter = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2.5, true, true, false, 1, 30, .6f, 0, 0, 7);       
+            Shapes.Sphere saturn = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2, true, true, false, 1, 35, .5f, 0, 0, 8); 
+            Shapes.Sphere uranus = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1.5, true, true, false, 1, 40, .3f, 0, 0, 9); 
+            Shapes.Sphere neptune = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 1.3, true, true, false, 1, 45, .2f, 0, 0, 10); 
+            Shapes.Sphere PLUOT = new Shapes.Sphere(new Vector3(0.0f, 0.0f, 43.0f), false, 2, true, true, false, 1, 50, .4f, 0, 0, 12);
+
+
 
 
         private List<OGLShape> _drawList;
+
+        public Key _keyPressed;
         int  texture1, texture2, texture3, texture4, texture5, texture6, texture7, texture8, texture9, texture10, texture11,texture12,texture13;
 
         private void InitializeObjects()
@@ -46,20 +56,26 @@ namespace OpenTKTut
                _drawList.Add(uranus);
                _drawList.Add(neptune);
                _drawList.Add(saturn);
-               _drawList.Add(Comet);
+               _drawList.Add(PLUOT);
         }
         
         private void SetEvents()
         {
+               
             _window.RenderFrame += _window_RenderFrame;
             _window.Resize += _window_Resize;
-            _window.Load += _window_Load;             
+            _window.Load += _window_Load;
+                              
         }
 
         private void _window_Load(object sender, EventArgs e)
         {
+            GL.ClearColor(0.0f, 0.0f, 0.095f,0.0f);
             GL.Enable(EnableCap.DepthTest);
 
+                      
+            
+            //Textures
             GL.Enable(EnableCap.Texture2D);
             GL.GenTextures(1, out texture1);
             GL.GenTextures(1, out texture2);
@@ -120,7 +136,7 @@ namespace OpenTKTut
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, texData11.Width, texData11.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, texData11.Scan0);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
 
-
+            
             GL.BindTexture(TextureTarget.Texture2D, 12);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, texData12.Width, texData12.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, texData12.Scan0);
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
@@ -135,13 +151,13 @@ namespace OpenTKTut
         private void _window_Resize(object sender, EventArgs e)
         {
             if (_window.Height != 0)
-            {
+            { 
                 GL.Viewport(0, 0, _window.Width, _window.Height);
                 GL.MatrixMode(MatrixMode.Projection);
-                GL.LoadIdentity();
-                Matrix4 prespective = Matrix4.CreatePerspectiveFieldOfView(45f * 3.14f / 180.0f, _window.Width / _window.Height, 0.10f, 150.0f);
+                GL.LoadIdentity();         
+                Matrix4 prespective = Matrix4.CreatePerspectiveFieldOfView(45f * 3.14f / 180.0f, _window.Width / _window.Height, 0.10f, 150.0f);             
                 GL.LoadMatrix(ref prespective);
-                GL.MatrixMode(MatrixMode.Modelview);
+                GL.MatrixMode(MatrixMode.Modelview);               
             }
         }
 
@@ -150,13 +166,21 @@ namespace OpenTKTut
             GL.LoadIdentity();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Comet.MoveLinearMotion((float)e.Time);
+            //Draw Stars
+            GL.PointSize(3);
+            GL.Begin(PrimitiveType.Points);
+            GL.Color3(0.87f, .58f , 0.98f);
 
-            Comet.MoveLinearMotion((float)e.Time);
-
-            foreach (var shape in _drawList)
+            foreach (var item in starposition)
             {
-                shape.Draw();
+                GL.Vertex3(item.X, item.Y, item.Z);
+            }
+            GL.End();
+
+
+            for (int i=0;i<_drawList.Count;i++)
+            {
+                _drawList[i].Draw();
             }
 
             _window.SwapBuffers();
