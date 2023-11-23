@@ -13,7 +13,7 @@ namespace OpenTKTut.Shapes
 {
     class Sphere : OGLShape
     {
-        public Sphere(Vector3 center, bool isStar, double radius, bool AutoRotate,bool orbiting ,bool moon ,float rotatingSpeed, float RotatingRadius , float orbitingSpeed, float moonorbit , float moonSpeed, int textype)
+        public Sphere(Vector3 center, bool isStar, double radius, bool AutoRotate,bool orbiting ,bool moon ,float rotatingSpeed, float RotatingRadius , float orbitingSpeed, float moonorbit , float moonSpeed, int textype, bool isLinearMotion = false, Vector3? linearMotionDirection = null, float linearMotionSpeed = 0)
         {
             _Center = center;
             Radius = radius;
@@ -28,13 +28,26 @@ namespace OpenTKTut.Shapes
             MoonSpeed = moonSpeed;
             Textype = textype;
             IsStar = isStar;
+            IsLinearMotion = isLinearMotion;
+            LinearMotionDirection = linearMotionDirection;
+            LinearMotionSpeed = linearMotionSpeed;
         }
-        
+
+        public bool IsLinearMotion { get; set; }
+        public Vector3? LinearMotionDirection { get; set; }
+        public float LinearMotionSpeed { get; set; }
         public bool IsStar { get; set; } = false;
         public Vector3 EmissionColor { get; set; }
         public double Radius { get; set; }
         public int Textype;
 
+        public void MoveLinearMotion(float deltaTime)
+        {
+            if (IsLinearMotion && LinearMotionDirection != null)
+            {
+                _Center += LinearMotionDirection.Value * LinearMotionSpeed * deltaTime;
+            }
+        }
 
         protected override void ShapeDrawing()
         {
